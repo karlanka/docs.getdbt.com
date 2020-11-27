@@ -19,12 +19,15 @@ profile:
       # IMPORTANT: Make sure to quote the entire Jinja string here
       user: "{{ env_var('DBT_USER') }}"
       pass: "{{ env_var('DBT_PASSWORD') }}"
+      port: "{{ env_var('PORT') | int }}"
       ....
 ```
 
 </File>
 
 If the `DBT_USER` and `DBT_PASSWORD` environment variables are present when dbt is invoked, then these variables will be pulled into the profile as expected. If any environment variables are not set, then dbt will raise a compilation error.
+
+If passing port as an environment variable it needs to be cast into an `int` as jinja always renders variable as strings. Pipe the variable using either the `| int` or `| as_number` filter.
 
 :::caution Quoting, Curly Brackets, & You
 
